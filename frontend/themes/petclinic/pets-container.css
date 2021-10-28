@@ -1,0 +1,15 @@
+.pet-row {
+	border-top: 1px solid var(--lumo-contrast-30pct);
+	margin-top: var(--lumo-space-xs);
+	padding-top: 10px;
+}
+
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (max-width: 800px) {
+  .pet-row {
+	flex-direction: column;
+  }
+  .visits {
+  	margin-left: 0;
+  }
+}

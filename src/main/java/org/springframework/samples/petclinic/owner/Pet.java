@@ -79,7 +79,7 @@ public class Pet extends NamedEntity {
 		this.type = type;
 	}
 
-	public Owner getOwner() {
+    public Owner getOwner() {
 		return this.owner;
 	}
 

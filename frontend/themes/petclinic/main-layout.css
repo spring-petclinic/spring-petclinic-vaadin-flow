@@ -1,0 +1,75 @@
+[slot='drawer'] {
+  background-image: linear-gradient(0deg, var(--lumo-shade-5pct), var(--lumo-shade-5pct));
+}
+
+[slot='drawer'] nav a {
+  text-decoration: none;
+  transition: color 140ms;
+}
+
+[slot='drawer'] nav a .la {
+  margin-top: calc(var(--lumo-space-xs) * 0.5);
+}
+
+[slot='drawer'] nav a::before {
+  border-radius: var(--lumo-border-radius);
+  bottom: calc(var(--lumo-space-xs) * 0.5);
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: calc(var(--lumo-space-xs) * 0.5);
+  transition: background-color 140ms;
+}
+
+[slot='drawer'] nav a[highlight] {
+  color: var(--lumo-primary-text-color);
+}
+
+[slot='drawer'] nav a[highlight]::before {
+  background-color: var(--lumo-primary-color-10pct);
+}
+
+[slot='drawer'] a vaadin-icon {
+  box-sizing: border-box;
+  margin-inline-end: var(--lumo-space-s);
+  margin-inline-start: var(--lumo-space-xs);
+  padding: var(--lumo-space-xs);
+}
+
+[slot='drawer'] footer vaadin-context-menu {
+  align-items: center;
+  display: flex;
+}
+
+[slot='navbar'] {
+  background: var(--dark-grey);
+  border-top: 4px solid var(--green);
+    padding: var(--lumo-space-xs);
+}
+
+[slot='navbar'] vaadin-drawer-toggle {
+  color: #ffffff;
+}
+
+[slot='navbar'] a.navbar-brand {
+  background: url("../../images/spring-logo-dataflow.png") -1px -1px no-repeat;
+  margin: 12px 0 6px;
+  width: 229px;
+  height: 46px;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0;
+}
+
+[slot='navbar'] a.navbar-brand span {
+  display: block;
+  width: 229px;
+  height: 46px;
+  background: url("../../images/spring-logo-dataflow.png") -1px -48px no-repeat;
+  opacity: 0;
+}
+
+[slot='navbar'] a:hover.navbar-brand span {
+  opacity: 1;
+}
