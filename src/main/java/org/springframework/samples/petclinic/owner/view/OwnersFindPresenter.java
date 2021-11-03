@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.owner.view;
 
 import java.util.stream.Stream;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.owner.domain.Owner;
@@ -19,8 +18,6 @@ public class OwnersFindPresenter {
 
     private OwnersFindView findOwnersView;
 
-    private Page<Owner> latestSearchResult;
-
     OwnersFindPresenter(OwnerRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
     }
@@ -31,19 +28,11 @@ public class OwnersFindPresenter {
 
     public Stream<Owner> find(int page, int pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
-        if (latestSearchResult == null) {
-            latestSearchResult = ownerRepository.findByLastName(findOwnersView.getLastName(), pageable);
-        }
-        return latestSearchResult.get();
+        return ownerRepository.findByLastName(findOwnersView.getLastName(), pageable).stream();
     }
 
-    public int getCount(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page, pageSize);
-        latestSearchResult = ownerRepository.findByLastName(findOwnersView.getLastName(), pageable);
-        if (latestSearchResult.getTotalElements() == 0) {
-            findOwnersView.showMessage("notFound");
-        }
-        return (int) latestSearchResult.getTotalElements();
+    public int getCount() {
+        return ownerRepository.countByLastName(findOwnersView.getLastName());
     }
 
 }

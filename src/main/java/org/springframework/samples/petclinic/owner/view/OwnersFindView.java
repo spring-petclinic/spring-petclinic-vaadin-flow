@@ -56,7 +56,7 @@ public class OwnersFindView extends VerticalLayout {
 
         findOwnerButton.addClickListener(
                 e -> ownersGrid.setItems(query -> presenter.find(query.getPage(), query.getPageSize()),
-                        query -> presenter.getCount(query.getPage(), query.getPageSize())));
+                        query -> presenter.getCount()));
 
         VerticalLayout formContainer = new VerticalLayout(form, new HorizontalLayout(findOwnerButton, addOwnerButton));
         formContainer.setPadding(false);
