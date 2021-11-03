@@ -13,24 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.springframework.samples.petclinic.base.domain;
 
-package org.springframework.samples.petclinic;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.samples.petclinic.vet.domain.VetRepository;
+/**
+ * Simple JavaBean domain object adds a name property to <code>BaseEntity</code>. Used as
+ * a base class for objects needing these properties.
+ *
+ * @author Ken Krebs
+ * @author Juergen Hoeller
+ */
+@MappedSuperclass
+public class NamedEntity extends BaseEntity {
 
-@SpringBootTest
-class PetclinicIntegrationTests {
+	@Column(name = "name")
+	private String name;
 
-	@Autowired
-	private VetRepository vets;
+	public String getName() {
+		return this.name;
+	}
 
-	@Test
-	void testFindAll() throws Exception {
-		vets.findAll();
-		vets.findAll(); // served from cache
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return this.getName();
 	}
 
 }

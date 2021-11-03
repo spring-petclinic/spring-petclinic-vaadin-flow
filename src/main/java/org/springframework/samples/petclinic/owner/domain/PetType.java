@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.springframework.samples.petclinic.owner.domain;
 
-package org.springframework.samples.petclinic;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.samples.petclinic.vet.domain.VetRepository;
+import org.springframework.samples.petclinic.base.domain.NamedEntity;
 
-@SpringBootTest
-class PetclinicIntegrationTests {
-
-	@Autowired
-	private VetRepository vets;
-
-	@Test
-	void testFindAll() throws Exception {
-		vets.findAll();
-		vets.findAll(); // served from cache
-	}
+/**
+ * @author Juergen Hoeller Can be Cat, Dog, Hamster...
+ */
+@Entity
+@Table(name = "types")
+public class PetType extends NamedEntity {
 
 }
