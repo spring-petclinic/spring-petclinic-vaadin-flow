@@ -13,22 +13,22 @@ import org.springframework.samples.petclinic.ui.MainLayout;
 @Route
 public class MainContentLayout extends Div implements RouterLayout {
 
-    private final Div content = new Div();
+	private final Div content = new Div();
 
-    public MainContentLayout() {
-        final Div footer = new Div(new Image("./images/spring-pivotal-logo.png", "logo"));
-        footer.addClassName("footer");
+	public MainContentLayout() {
+		final Div footer = new Div(new Image("./images/spring-pivotal-logo.png", "logo"));
+		footer.addClassName("footer");
 
-        setSizeFull();
-        add(content, footer);
-    }
+		setSizeFull();
+		add(content, footer);
+	}
 
-    @Override
-    public void showRouterLayoutContent(HasElement hasElement) {
-        Objects.requireNonNull(hasElement);
-        Objects.requireNonNull(hasElement.getElement());
-        content.removeAll();
-        content.getElement().appendChild(hasElement.getElement());
-    }
+	@Override
+	public void showRouterLayoutContent(HasElement hasElement) {
+		Objects.requireNonNull(hasElement);
+		Objects.requireNonNull(hasElement.getElement());
+		content.removeAll();
+		content.getElement().appendChild(hasElement.getElement());
+	}
 
 }

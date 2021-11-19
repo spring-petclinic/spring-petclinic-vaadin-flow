@@ -3,13 +3,12 @@ package org.springframework.samples.petclinic.ui;
 import java.util.Optional;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
@@ -28,37 +27,24 @@ public class MainLayout extends AppLayout {
 	private final Tabs menu;
 
 	public MainLayout() {
-		setPrimarySection(Section.DRAWER);
-		addToNavbar(true, createHeaderContent());
 		menu = createMenu();
-		addToDrawer(createDrawerContent(menu));
+		addToNavbar(createHeaderContent());
 	}
 
 	private Component createHeaderContent() {
 		final HorizontalLayout layout = new HorizontalLayout();
+		layout.getThemeList().add("dark");
 		layout.setPadding(true);
+		layout.setSpacing(false);
 		layout.setId("header");
 		layout.setWidthFull();
-		layout.setSpacing(true);
 		layout.setAlignItems(FlexComponent.Alignment.CENTER);
-
-		layout.add(new DrawerToggle());
+		layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
 
 		final Span brand = new Span();
 		final Anchor brandLink = new Anchor("/", brand);
 		brandLink.addClassName("navbar-brand");
 		layout.add(brandLink);
-
-		return layout;
-	}
-
-	private Component createDrawerContent(Tabs menu) {
-		final VerticalLayout layout = new VerticalLayout();
-		layout.setSizeFull();
-		layout.setPadding(false);
-		layout.setSpacing(false);
-		layout.getThemeList().set("spacing-s", true);
-		layout.setAlignItems(FlexComponent.Alignment.STRETCH);
 
 		layout.add(menu);
 
@@ -67,7 +53,7 @@ public class MainLayout extends AppLayout {
 
 	private Tabs createMenu() {
 		final Tabs tabs = new Tabs();
-		tabs.setOrientation(Tabs.Orientation.VERTICAL);
+		tabs.setOrientation(Tabs.Orientation.HORIZONTAL);
 		tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
 		tabs.setId("tabs");
 		tabs.add(createMenuItems());
@@ -88,6 +74,7 @@ public class MainLayout extends AppLayout {
 		final RouterLink routerLink =
 				new RouterLink(getTranslation(translationKey), navigationTarget);
 		routerLink.addComponentAsFirst(viewIcon.create());
+		routerLink.addClassNames("flex", "gap-s", "uppercase");
 		return routerLink;
 	}
 

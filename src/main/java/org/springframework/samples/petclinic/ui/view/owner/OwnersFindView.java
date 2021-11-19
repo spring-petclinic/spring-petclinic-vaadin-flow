@@ -23,63 +23,63 @@ import org.springframework.samples.petclinic.ui.view.MainContentLayout;
 @Route(value = "owners/find", layout = MainContentLayout.class)
 public class OwnersFindView extends VerticalLayout {
 
-        private final Grid<Owner> ownersGrid;
+	private final Grid<Owner> ownersGrid;
 
-        private final TextField lastNameTextField;
+	private final TextField lastNameTextField;
 
-        OwnersFindView(OwnersFindPresenter presenter) {
-                presenter.setView(this);
+	OwnersFindView(OwnersFindPresenter presenter) {
+		presenter.setView(this);
 
-                setSizeFull();
+		setSizeFull();
 
-                H2 title = new H2(getTranslation("findOwners"));
+		H2 title = new H2(getTranslation("findOwners"));
 
-                lastNameTextField = new TextField(getTranslation("lastName"));
-                FormLayout form = new FormLayout(lastNameTextField);
+		lastNameTextField = new TextField(getTranslation("lastName"));
+		FormLayout form = new FormLayout(lastNameTextField);
 
-                Button findOwnerButton = new Button(getTranslation("findOwner"));
+		Button findOwnerButton = new Button(getTranslation("findOwner"));
+		findOwnerButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-                Button addOwnerButton = new Button(getTranslation("addOwner"));
-                addOwnerButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-                addOwnerButton.addClickListener(
-                                e -> UI.getCurrent().navigate(OwnerCreateView.class));
+		Button addOwnerButton = new Button(getTranslation("addOwner"));
+		addOwnerButton.addClickListener(
+				e -> UI.getCurrent().navigate(OwnerCreateView.class));
 
-                ownersGrid = new Grid<>();
-                ownersGrid
-                                .addColumn(new ComponentRenderer<>(owner -> new RouterLink(
-                                                owner.getFirstName() + " " + owner.getLastName(),
-                                                OwnerDetailsView.class,
-                                                new RouteParameters("ownerId",
-                                                                owner.getId().toString()))))
-                                .setHeader(getTranslation("name"));
-                ownersGrid.addColumn(Owner::getAddress).setHeader(getTranslation("address"));
-                ownersGrid.addColumn(Owner::getCity).setHeader(getTranslation("city"));
-                ownersGrid.addColumn(Owner::getTelephone).setHeader(getTranslation(("telephone")));
-                ownersGrid.addColumn(owner -> owner.getPets().stream().map(Pet::toString)
-                                .collect(Collectors.joining(", ")))
-                                .setHeader(getTranslation("pets"));
-                ownersGrid.setItems(new ArrayList<>());
+		ownersGrid = new Grid<>();
+		ownersGrid
+				.addColumn(new ComponentRenderer<>(owner -> new RouterLink(
+						owner.getFirstName() + " " + owner.getLastName(),
+						OwnerDetailsView.class,
+						new RouteParameters("ownerId",
+								owner.getId().toString()))))
+				.setHeader(getTranslation("name"));
+		ownersGrid.addColumn(Owner::getAddress).setHeader(getTranslation("address"));
+		ownersGrid.addColumn(Owner::getCity).setHeader(getTranslation("city"));
+		ownersGrid.addColumn(Owner::getTelephone).setHeader(getTranslation(("telephone")));
+		ownersGrid.addColumn(owner -> owner.getPets().stream().map(Pet::toString)
+				.collect(Collectors.joining(", ")))
+				.setHeader(getTranslation("pets"));
+		ownersGrid.setItems(new ArrayList<>());
 
-                findOwnerButton.addClickListener(
-                                e -> ownersGrid.setItems(
-                                                query -> presenter.find(query.getPage(),
-                                                                query.getPageSize()),
-                                                query -> presenter.getCount()));
+		findOwnerButton.addClickListener(
+				e -> ownersGrid.setItems(
+						query -> presenter.find(query.getPage(),
+								query.getPageSize()),
+						query -> presenter.getCount()));
 
-                VerticalLayout formContainer =
-                                new VerticalLayout(form, new HorizontalLayout(findOwnerButton,
-                                                addOwnerButton));
-                formContainer.setPadding(false);
+		HorizontalLayout formContainer =
+				new HorizontalLayout(form, findOwnerButton, addOwnerButton);
+		formContainer.setAlignItems(Alignment.END);
+		formContainer.setPadding(false);
 
-                add(title, formContainer, ownersGrid);
-        }
+		add(title, formContainer, ownersGrid);
+	}
 
-        public void showMessage(String messageKey) {
-                Notification.show(getTranslation(messageKey));
-        }
+	public void showMessage(String messageKey) {
+		Notification.show(getTranslation(messageKey));
+	}
 
-        public String getLastName() {
-                return lastNameTextField.getValue();
-        }
+	public String getLastName() {
+		return lastNameTextField.getValue();
+	}
 
 }

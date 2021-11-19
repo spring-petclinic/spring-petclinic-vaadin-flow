@@ -47,9 +47,7 @@
 }
 
 [slot="navbar"] {
-  background: var(--dark-grey);
   border-top: 4px solid var(--green);
-  padding: var(--lumo-space-xs);
 }
 
 [slot="navbar"] vaadin-drawer-toggle {
