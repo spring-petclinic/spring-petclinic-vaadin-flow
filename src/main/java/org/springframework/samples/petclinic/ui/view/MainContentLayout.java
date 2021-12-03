@@ -4,6 +4,7 @@ import java.util.Objects;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
@@ -11,7 +12,7 @@ import org.springframework.samples.petclinic.ui.MainLayout;
 
 @ParentLayout(MainLayout.class)
 @Route
-public class MainContentLayout extends Div implements RouterLayout {
+public class MainContentLayout extends VerticalLayout implements RouterLayout {
 
 	private final Div content = new Div();
 
@@ -20,6 +21,9 @@ public class MainContentLayout extends Div implements RouterLayout {
 		footer.addClassName("footer");
 
 		setSizeFull();
+		setJustifyContentMode(JustifyContentMode.BETWEEN);
+		content.setSizeFull();
+
 		add(content, footer);
 	}
 
