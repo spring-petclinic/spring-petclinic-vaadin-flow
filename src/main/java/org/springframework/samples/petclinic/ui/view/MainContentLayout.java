@@ -4,6 +4,7 @@ import java.util.Objects;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
@@ -17,7 +18,9 @@ public class MainContentLayout extends VerticalLayout implements RouterLayout {
 	private final Div content = new Div();
 
 	public MainContentLayout() {
-		final Div footer = new Div(new Image("./images/spring-pivotal-logo.png", "logo"));
+		final HorizontalLayout footer = new HorizontalLayout(
+				new Image("./images/vaadin.png", "Vaadin"),
+				new Image("./images/spring-pivotal-logo.png", "Spring"));
 		footer.addClassName("footer");
 
 		setSizeFull();
