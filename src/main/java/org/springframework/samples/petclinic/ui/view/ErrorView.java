@@ -23,6 +23,10 @@ public class ErrorView extends VerticalLayout implements HasErrorParameter<Excep
 		errorLabel = new Label();
 
 		add(image, message, errorLabel);
+
+		setSizeFull();
+		setJustifyContentMode(JustifyContentMode.CENTER);
+		setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 	}
 
 	@Override
