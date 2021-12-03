@@ -10,12 +10,14 @@ import com.vaadin.flow.router.Route;
 public class WelcomeView extends VerticalLayout implements HasDynamicTitle {
 
 	public WelcomeView() {
-		setSizeFull();
-
 		H2 h2 = new H2(getTranslation("welcome"));
 		Image image = new Image("./images/pets.png", getTranslation("pets"));
 
 		add(h2, image);
+
+		setSizeFull();
+		setJustifyContentMode(JustifyContentMode.CENTER);
+		setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 	}
 
 	@Override

@@ -20,8 +20,8 @@
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    
-    <vaadin.version>21.0.3</vaadin.version>
+
+    <vaadin.version>22.0.0</vaadin.version>
   </properties>
 
   <dependencyManagement>
@@ -35,7 +35,7 @@
 		</dependency>
 	</dependencies>
   </dependencyManagement>
-  
+
 
   <dependencies>
     <!-- Spring and Spring Boot dependencies -->
@@ -165,7 +165,7 @@
       </plugin>
 
 
-		<!-- Take care of synchronizing java dependencies and imports in package.json 
+		<!-- Take care of synchronizing java dependencies and imports in package.json
 			and main.js files. It also creates webpack.config.js if not exists yet. -->
 		<plugin>
 			<groupId>com.vaadin</groupId>
@@ -294,7 +294,7 @@
         </pluginManagement>
       </build>
     </profile>
-    
+
     <profile>
             <!-- Production mode is activated using -Pproduction -->
             <id>production</id>
@@ -365,7 +365,7 @@
                 </plugins>
             </build>
         </profile>
-        
+
   </profiles>
 
 </project>

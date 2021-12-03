@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.dataview.GridLazyDataView;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -58,13 +59,11 @@ public class OwnersFindView extends VerticalLayout {
 		ownersGrid.addColumn(owner -> owner.getPets().stream().map(Pet::toString)
 				.collect(Collectors.joining(", ")))
 				.setHeader(getTranslation("pets"));
-		ownersGrid.setItems(new ArrayList<>());
+
+		updateGrid(presenter);
 
 		findOwnerButton.addClickListener(
-				e -> ownersGrid.setItems(
-						query -> presenter.find(query.getPage(),
-								query.getPageSize()),
-						query -> presenter.getCount()));
+				e -> updateGrid(presenter));
 
 		HorizontalLayout formContainer =
 				new HorizontalLayout(form, findOwnerButton, addOwnerButton);
@@ -80,6 +79,13 @@ public class OwnersFindView extends VerticalLayout {
 
 	public String getLastName() {
 		return lastNameTextField.getValue();
+	}
+
+	private GridLazyDataView<Owner> updateGrid(OwnersFindPresenter presenter) {
+		return ownersGrid.setItems(
+			query -> presenter.find(query.getPage(),
+				query.getPageSize()),
+			query -> presenter.getCount());
 	}
 
 }
