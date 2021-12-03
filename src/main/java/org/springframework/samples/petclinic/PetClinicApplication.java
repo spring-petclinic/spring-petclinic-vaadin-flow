@@ -27,9 +27,6 @@ import com.vaadin.flow.theme.Theme;
 
 /**
  * PetClinic Spring Boot Application.
- *
- * @author Dave Syer
- *
  */
 @SpringBootApplication
 @Theme("petclinic")
