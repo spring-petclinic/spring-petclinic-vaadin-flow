@@ -4,7 +4,6 @@ import java.util.Optional;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -61,17 +60,12 @@ public class MainLayout extends AppLayout {
 		return tabs;
 	}
 
-	private Component[] createMenuItems() {
-		Tab error = new Tab(getTranslation("error"));
-		error.addComponentAsFirst(VaadinIcon.WARNING.create());
-	    
-		
+	private Tab[] createMenuItems() {
 		return new Tab[] {
 				new Tab(createRouterLink("home", VaadinIcon.HOME, WelcomeView.class)),
 				new Tab(createRouterLink("findOwners", VaadinIcon.SEARCH, OwnersFindView.class)),
 				new Tab(createRouterLink("veterinarians", VaadinIcon.LIST, VetsView.class)),
-				new Tab(createRouterLink("error", VaadinIcon.WARNING, ErrorView.class)),
-				error
+				new Tab(createRouterLink("error", VaadinIcon.WARNING, ErrorView.class))
 		};
 	}
 

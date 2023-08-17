@@ -133,9 +133,9 @@ public class OwnerDetailsView extends VerticalLayout implements BeforeEnterObser
             petsForm.addFormItem(petTypeField, getTranslation("type"));
 
             Grid<Visit> petVisitsGrid = new Grid<>();
+
             petVisitsGrid
-                    .addColumn(new LocalDateRenderer<>(Visit::getDate,
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                    .addColumn(new LocalDateRenderer<>(Visit::getDate,"yyyy-MM-dd"))
                     .setHeader(getTranslation("visitDate"));
             petVisitsGrid.addColumn(Visit::getDescription).setHeader(getTranslation("description"));
             petVisitsGrid.setItems(pet.getVisits());

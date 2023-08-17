@@ -1,9 +1,9 @@
 package org.springframework.samples.petclinic.ui.view;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.ErrorParameter;
@@ -13,14 +13,14 @@ import com.vaadin.flow.router.Route;
 @Route(value = "oups", layout = MainContentLayout.class)
 public class ErrorView extends VerticalLayout implements HasErrorParameter<Exception> {
 
-	private final Label errorLabel;
+	private final NativeLabel errorLabel;
 
 	public ErrorView() {
 		Image image = new Image("./images/pets.png", getTranslation("pets"));
 
 		H3 message = new H3(getTranslation("somethingHappened"));
 
-		errorLabel = new Label();
+		errorLabel = new NativeLabel();
 
 		add(image, message, errorLabel);
 
