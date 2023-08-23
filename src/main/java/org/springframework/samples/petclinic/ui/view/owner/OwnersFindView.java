@@ -1,7 +1,11 @@
 package org.springframework.samples.petclinic.ui.view.owner;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
+
+import org.springframework.samples.petclinic.backend.owner.Owner;
+import org.springframework.samples.petclinic.backend.owner.Pet;
+import org.springframework.samples.petclinic.ui.view.MainContentLayout;
+
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -14,12 +18,10 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteParameters;
 import com.vaadin.flow.router.RouterLink;
-import org.springframework.samples.petclinic.backend.owner.Owner;
-import org.springframework.samples.petclinic.backend.owner.Pet;
-import org.springframework.samples.petclinic.ui.view.MainContentLayout;
 
 @Route(value = "owners/find", layout = MainContentLayout.class)
 public class OwnersFindView extends VerticalLayout {
@@ -59,11 +61,12 @@ public class OwnersFindView extends VerticalLayout {
 		ownersGrid.addColumn(owner -> owner.getPets().stream().map(Pet::toString)
 				.collect(Collectors.joining(", ")))
 				.setHeader(getTranslation("pets"));
-
+		
 		updateGrid(presenter);
-
-		findOwnerButton.addClickListener(
-				e -> updateGrid(presenter));
+		
+		lastNameTextField.setValueChangeMode(ValueChangeMode.EAGER);
+		lastNameTextField.addValueChangeListener(e -> updateGrid(presenter));
+		findOwnerButton.addClickListener(e -> updateGrid(presenter));
 
 		HorizontalLayout formContainer =
 				new HorizontalLayout(form, findOwnerButton, addOwnerButton);
