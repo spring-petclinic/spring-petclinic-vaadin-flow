@@ -2,14 +2,16 @@ package org.springframework.samples.petclinic.ui.view.vet;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import com.vaadin.flow.component.AttachEvent;
-import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.Route;
+
 import org.springframework.samples.petclinic.backend.vet.Specialty;
 import org.springframework.samples.petclinic.backend.vet.Vet;
 import org.springframework.samples.petclinic.ui.view.MainContentLayout;
+
+import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.Route;
 
 @Route(value = "vets", layout = MainContentLayout.class)
 public class VetsView extends VerticalLayout {
@@ -25,7 +27,7 @@ public class VetsView extends VerticalLayout {
 
         setSizeFull();
 
-        H3 title = new H3(getTranslation("veterinarians"));
+        H2 title = new H2(getTranslation("veterinarians"));
 
         vetsGrid = new Grid<>();
         vetsGrid.addColumn(vet -> vet.getFirstName() + " " + vet.getLastName())

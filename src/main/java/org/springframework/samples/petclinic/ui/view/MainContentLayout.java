@@ -20,7 +20,7 @@ public class MainContentLayout extends VerticalLayout implements RouterLayout {
 	public MainContentLayout() {
 		final HorizontalLayout footer = new HorizontalLayout(
 				new Image("./images/vaadin.png", "Vaadin"),
-				new Image("./images/spring-pivotal-logo.png", "Spring"));
+				new Image("./images/spring-logo.svg", "Spring"));
 		footer.addClassName("footer");
 
 		setSizeFull();
