@@ -32,120 +32,175 @@ import org.springframework.core.style.ToStringCreator;
 import org.springframework.samples.petclinic.backend.model.Person;
 
 /**
- * Simple JavaBean domain object representing an owner.
- *
- * @author Ken Krebs
- * @author Juergen Hoeller
- * @author Sam Brannen
- * @author Michael Isvy
+ * Represents a pet owner in the PetClinic system.
+ * Owners are responsible for their pets and are the primary clients of the veterinary clinic.
+ * This entity is mapped to the database and contains personal and contact information.
+ * <p>
+ * Business context: Owners register their pets, provide contact details, and interact with veterinary staff for appointments and treatments.
  */
 @Entity
 @Table(name = "owners")
 public class Owner extends Person {
+    /**
+     * Owner's address.
+     */
+    @Column(name = "address")
+    @NotEmpty
+    private String address;
 
-	@Column(name = "address")
-	@NotEmpty
-	private String address;
+    /**
+     * Owner's city of residence.
+     */
+    @Column(name = "city")
+    @NotEmpty
+    private String city;
 
-	@Column(name = "city")
-	@NotEmpty
-	private String city;
+    /**
+     * Owner's telephone number.
+     */
+    @Column(name = "telephone")
+    @NotEmpty
+    @Digits(fraction = 0, integer = 10)
+    private String telephone;
 
-	@Column(name = "telephone")
-	@NotEmpty
-	@Digits(fraction = 0, integer = 10)
-	private String telephone;
+    /**
+     * List of pets owned by this owner.
+     * The relationship is one-to-many; an owner can have multiple pets.
+     */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
+    private Set<Pet> pets;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
-	private Set<Pet> pets;
+    /**
+     * Returns the owner's address.
+     * @return address of the owner
+     */
+    public String getAddress() {
+        return this.address;
+    }
 
-	public String getAddress() {
-		return this.address;
-	}
+    /**
+     * Sets the owner's address.
+     * @param address owner's address
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    /**
+     * Returns the owner's city.
+     * @return city of residence
+     */
+    public String getCity() {
+        return this.city;
+    }
 
-	public String getCity() {
-		return this.city;
-	}
+    /**
+     * Sets the owner's city.
+     * @param city owner's city
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    /**
+     * Returns the owner's telephone number.
+     * @return telephone number
+     */
+    public String getTelephone() {
+        return this.telephone;
+    }
 
-	public String getTelephone() {
-		return this.telephone;
-	}
+    /**
+     * Sets the owner's telephone number.
+     * @param telephone owner's telephone number
+     */
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
+    /**
+     * Internal accessor for the set of pets.
+     * Initializes the set if it is null.
+     * @return set of pets
+     */
+    protected Set<Pet> getPetsInternal() {
+        if (this.pets == null) {
+            this.pets = new HashSet<>();
+        }
+        return this.pets;
+    }
 
-	protected Set<Pet> getPetsInternal() {
-		if (this.pets == null) {
-			this.pets = new HashSet<>();
-		}
-		return this.pets;
-	}
+    /**
+     * Internal mutator for the set of pets.
+     * @param pets set of pets to assign
+     */
+    protected void setPetsInternal(Set<Pet> pets) {
+        this.pets = pets;
+    }
 
-	protected void setPetsInternal(Set<Pet> pets) {
-		this.pets = pets;
-	}
+    /**
+     * Returns a sorted, unmodifiable list of the owner's pets.
+     * Pets are sorted by name for consistent display in the UI.
+     * @return sorted list of pets
+     */
+    public List<Pet> getPets() {
+        List<Pet> sortedPets = new ArrayList<>(getPetsInternal());
+        PropertyComparator.sort(sortedPets, new MutableSortDefinition("name", true, true));
+        return Collections.unmodifiableList(sortedPets);
+    }
 
-	public List<Pet> getPets() {
-		List<Pet> sortedPets = new ArrayList<>(getPetsInternal());
-		PropertyComparator.sort(sortedPets, new MutableSortDefinition("name", true, true));
-		return Collections.unmodifiableList(sortedPets);
-	}
+    /**
+     * Adds a pet to the owner's list of pets.
+     * Ensures bidirectional relationship is maintained.
+     * @param pet the pet to add
+     */
+    public void addPet(Pet pet) {
+        if (pet.isNew()) {
+            getPetsInternal().add(pet);
+        }
+        pet.setOwner(this); // Maintain bidirectional association
+    }
 
-	public void addPet(Pet pet) {
-		if (pet.isNew()) {
-			getPetsInternal().add(pet);
-		}
-		pet.setOwner(this);
-	}
+    /**
+     * Finds a pet by name.
+     * @param name the name of the pet to find
+     * @return the pet with the given name, or null if not found
+     */
+    public Pet getPet(String name) {
+        return getPet(name, false);
+    }
 
-	/**
-	 * Return the Pet with the given name, or null if none found for this Owner.
-	 * 
-	 * @param name to test
-	 * @return true if pet name is already in use
-	 */
-	public Pet getPet(String name) {
-		return getPet(name, false);
-	}
+    /**
+     * Finds a pet by name, optionally ignoring new pets.
+     * @param name the name of the pet to find
+     * @param ignoreNew whether to ignore new pets
+     * @return the pet with the given name, or null if not found
+     */
+    public Pet getPet(String name, boolean ignoreNew) {
+        name = name.toLowerCase();
+        for (Pet pet : getPetsInternal()) {
+            if (!ignoreNew || !pet.isNew()) {
+                String compName = pet.getName();
+                compName = compName.toLowerCase();
+                if (compName.equals(name)) {
+                    return pet;
+                }
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * Return the Pet with the given name, or null if none found for this Owner.
-	 * 
-	 * @param name to test
-	 * @return true if pet name is already in use
-	 */
-	public Pet getPet(String name, boolean ignoreNew) {
-		name = name.toLowerCase();
-		for (Pet pet : getPetsInternal()) {
-			if (!ignoreNew || !pet.isNew()) {
-				String compName = pet.getName();
-				compName = compName.toLowerCase();
-				if (compName.equals(name)) {
-					return pet;
-				}
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringCreator(this)
-
-				.append("id", this.getId()).append("new", this.isNew())
-				.append("lastName", this.getLastName())
-				.append("firstName", this.getFirstName()).append("address", this.address)
-				.append("city", this.city)
-				.append("telephone", this.telephone).toString();
-	}
-
+    /**
+     * Returns a string representation of the owner for debugging and logging.
+     * @return string with owner details
+     */
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", this.getId()).append("new", this.isNew())
+                .append("lastName", this.getLastName())
+                .append("firstName", this.getFirstName()).append("address", this.address)
+                .append("city", this.city)
+                .append("telephone", this.telephone).toString();
+    }
 }

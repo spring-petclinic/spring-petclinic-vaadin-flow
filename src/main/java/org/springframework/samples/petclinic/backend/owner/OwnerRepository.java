@@ -20,10 +20,14 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
- * Repository class for <code>Owner</code> domain objects All method names are compliant with Spring
- * Data naming conventions so this interface can easily be extended for Spring Data. See:
- * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
+ * Repository interface for Owner entities.
+ * Provides data access operations for pet owners in the PetClinic system.
+ * Extends Spring Data JPA's CrudRepository for standard CRUD functionality.
+ * <p>
+ * Business context: Enables searching, retrieving, and managing owner records for veterinary appointments and pet management.
  *
  * @author Ken Krebs
  * @author Juergen Hoeller
@@ -35,7 +39,7 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
     /**
      * Retrieve {@link Owner}s from the data store by last name, returning all owners whose last
      * name <i>starts</i> with the given name.
-     * 
+     *
      * @param lastName Value to search for
      * @return a Collection of matching {@link Owner}s (or an empty Collection if none found)
      */
@@ -47,7 +51,7 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
     /**
      * Retrieve {@link Owner}s from the data store by last name, returning total count of owners
      * whose last name <i>starts</i> with the given name.
-     * 
+     *
      * @param lastName Value to search for
      * @return count of matching {@link Owner}s
      */
@@ -58,7 +62,7 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 
     /**
      * Retrieve an {@link Owner} from the data store by id.
-     * 
+     *
      * @param id the id to search for
      * @return the {@link Owner} if found
      */
@@ -68,7 +72,7 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 
     /**
      * Save an {@link Owner} to the data store, either inserting or updating it.
-     * 
+     *
      * @param owner the {@link Owner} to save
      */
     void save(Owner owner);
@@ -80,4 +84,19 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
     @Transactional(readOnly = true)
     Page<Owner> findAll(Pageable pageable);
 
+    /**
+     * Finds owners by last name.
+     * Used for searching clients in the veterinary clinic.
+     *
+     * @param lastName the last name to search for
+     * @return a list of owners matching the last name
+     */
+    List<Owner> findByLastName(String lastName);
+
+    /**
+     * Retrieves all owners in the system.
+     *
+     * @return a list of all owners
+     */
+    List<Owner> findAll();
 }
