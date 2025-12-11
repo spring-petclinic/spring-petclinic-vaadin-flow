@@ -13,13 +13,26 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
+/**
+ * Vaadin view component for displaying veterinarians in the PetClinic application (UI layer).
+ * Presents a list of veterinary staff and their specialties to clinic clients.
+ * <p>
+ * Business context: Enables clients to view available veterinarians and their areas of expertise for scheduling appointments and consultations.
+ */
 @Route(value = "vets", layout = MainContentLayout.class)
 public class VetsView extends VerticalLayout {
 
     private final VetsPresenter presenter;
 
+    /**
+     * Grid component for displaying veterinarian data in a tabular format.
+     */
     private final Grid<Vet> vetsGrid;
 
+    /**
+     * Initializes the veterinarians view.
+     * Sets up the UI components for displaying veterinary staff.
+     */
     VetsView(VetsPresenter presenter) {
         this.presenter = presenter;
 
@@ -41,6 +54,11 @@ public class VetsView extends VerticalLayout {
         add(title, vetsGrid);
     }
 
+    /**
+     * Displays a list of veterinarians in the grid.
+     *
+     * @param vets the list of veterinarians to display
+     */
     public void show(List<Vet> vets) {
         vetsGrid.setItems(vets);
     }
