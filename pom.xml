@@ -10,18 +10,18 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.4.3</version>
+    <version>4.0.1</version>
   </parent>
   <name>petclinic</name>
 
   <properties>
 
     <!-- Generic properties -->
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <vaadin.version>24.7.0</vaadin.version>
+    <vaadin.version>25.0.2</vaadin.version>
   </properties>
 
   <dependencyManagement>
@@ -175,8 +175,9 @@
 			<executions>
 				<execution>
 					<goals>
-						<goal>prepare-frontend</goal>
+						<goal>build-frontend</goal>
 					</goals>
+          <phase>compile</phase>
 				</execution>
 			</executions>
 		</plugin>
@@ -229,26 +230,15 @@
   </pluginRepositories>
 
   <profiles>
-    <profile>
-            <!-- Production mode is activated using -Pproduction -->
-            <id>production</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.vaadin</groupId>
-                        <artifactId>vaadin-maven-plugin</artifactId>
-                        <version>${vaadin.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>build-frontend</goal>
-                                </goals>
-                                <phase>compile</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
+        <profile>
+            <id>development</id>
+            <dependencies>
+              <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-dev</artifactId>
+                <optional>false</optional>
+              </dependency>
+            </dependencies>
         </profile>
 
         <profile>

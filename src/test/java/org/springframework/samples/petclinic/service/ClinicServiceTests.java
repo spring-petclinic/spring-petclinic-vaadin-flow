@@ -19,10 +19,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.backend.owner.Owner;
@@ -63,9 +60,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Michael Isvy
  * @author Dave Syer
  */
-@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-// Ensure that if the mysql profile is active we connect to the real database:
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@SpringBootTest
+@Transactional
 class ClinicServiceTests {
 
 	@Autowired

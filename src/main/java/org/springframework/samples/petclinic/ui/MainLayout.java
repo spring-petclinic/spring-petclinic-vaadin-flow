@@ -12,8 +12,11 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.samples.petclinic.ui.view.ErrorView;
 import org.springframework.samples.petclinic.ui.view.WelcomeView;
 import org.springframework.samples.petclinic.ui.view.owner.OwnersFindView;
@@ -22,7 +25,8 @@ import org.springframework.samples.petclinic.ui.view.vet.VetsView;
 /**
  * The main view is a top-level placeholder for other views.
  */
-public class MainLayout extends AppLayout {
+@AnonymousAllowed
+public class MainLayout extends AppLayout implements AfterNavigationObserver {
 
 	private final Tabs menu;
 
@@ -79,8 +83,7 @@ public class MainLayout extends AppLayout {
 	}
 
 	@Override
-	protected void afterNavigation() {
-		super.afterNavigation();
+	public void afterNavigation(AfterNavigationEvent event) {
 		updateChrome();
 	}
 
