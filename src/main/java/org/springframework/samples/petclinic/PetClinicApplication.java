@@ -23,11 +23,13 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.server.PWA;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 /**
  * PetClinic Spring Boot Application.
  */
 @SpringBootApplication
+@StyleSheet(Lumo.STYLESHEET)
 @StyleSheet("styles.css")
 @PWA(name = "Pet Clinic", shortName = "Pet Clinic", offlineResources = { "icons/icon.png" })
 public class PetClinicApplication extends SpringBootServletInitializer implements AppShellConfigurator {
