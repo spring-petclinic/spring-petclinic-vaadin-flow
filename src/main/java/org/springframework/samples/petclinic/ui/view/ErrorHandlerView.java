@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.ui.view;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 import org.slf4j.LoggerFactory;
 
 import com.vaadin.flow.component.html.H3;
@@ -44,7 +46,12 @@ public class ErrorHandlerView extends VerticalLayout implements HasErrorParamete
 	public int setErrorParameter(BeforeEnterEvent event, ErrorParameter<Exception> parameter) {
 		LoggerFactory.getLogger(ErrorHandlerView.class).error(parameter.getCustomMessage(), parameter.getException());
 		errorLabel.setText(getTranslation("navigationError", event.getLocation().getPath()));
-		text.setText(ExceptionUtils.getStackTrace(parameter.getException()));
+
+		// Convert exception stack trace to string
+		StringWriter sw = new StringWriter();
+		parameter.getException().printStackTrace(new PrintWriter(sw));
+		text.setText(sw.toString());
+
 		return HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 	}
 

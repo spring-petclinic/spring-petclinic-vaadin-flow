@@ -20,18 +20,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-import com.vaadin.flow.component.dependency.NpmPackage;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.theme.Theme;
 
 /**
  * PetClinic Spring Boot Application.
  */
 @SpringBootApplication
-@Theme("petclinic")
+@StyleSheet("styles.css")
 @PWA(name = "Pet Clinic", shortName = "Pet Clinic", offlineResources = { "icons/icon.png" })
-@NpmPackage(value = "line-awesome", version = "1.3.0")
 public class PetClinicApplication extends SpringBootServletInitializer implements AppShellConfigurator {
 
     public static void main(String[] args) {
