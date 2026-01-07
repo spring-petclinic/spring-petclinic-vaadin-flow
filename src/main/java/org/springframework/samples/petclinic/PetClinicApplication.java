@@ -16,6 +16,7 @@
 
 package org.springframework.samples.petclinic;
 
+import com.vaadin.flow.theme.lumo.Lumo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -28,6 +29,7 @@ import com.vaadin.flow.server.PWA;
  * PetClinic Spring Boot Application.
  */
 @SpringBootApplication
+@StyleSheet(Lumo.STYLESHEET)
 @StyleSheet("styles.css")
 @PWA(name = "Pet Clinic", shortName = "Pet Clinic", offlineResources = { "icons/icon.png" })
 public class PetClinicApplication extends SpringBootServletInitializer implements AppShellConfigurator {
